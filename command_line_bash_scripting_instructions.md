@@ -1,6 +1,6 @@
 # COMMAND LINE:  BASH SCRIPTING 
 
-##Note: 
+## Note: 
 
 Mostly follow software carpentry workshop material
 [Software Carpentry Bash Script Module](https://swcarpentry.github.io/shell-novice/06-script/index.html)
