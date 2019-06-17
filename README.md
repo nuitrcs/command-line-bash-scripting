@@ -7,6 +7,8 @@ Workshop covers the material from
 and 
 [Data Science at Command Line](https://www.datascienceatthecommandline.com)
 
+You'll need to download [Data Files](https://github.com/nuitrcs/bash_hpc_workshops/blob/master/shell-novice-data.zip) for this workshop.
+
 ## Handouts
 
 [vi Cheatsheet](https://github.com/nuitrcs/bash_hpc_workshops/blob/master/vibasics.pdf?raw=True)
