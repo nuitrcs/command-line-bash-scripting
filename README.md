@@ -7,13 +7,20 @@ Workshop covers the material from
 and 
 [Data Science at Command Line](https://www.datascienceatthecommandline.com)
 
-Other useful material you can find:
+## Handouts
+
+[vi Cheatsheet](https://github.com/nuitrcs/bash_hpc_workshops/blob/master/vibasics.pdf?raw=True)
+
+[Code Script](https://github.com/nuitrcs/command-line-bash-scripting/blob/master/CommandLineScriptsHandout.pdf)
+
+
+## Resources
+
+You can find a list of general command line resources at https://github.com/nuitrcs/bash_hpc_workshops.  
 
 [Bash Guide for Beginners](http://tldp.org/LDP/Bash-Beginners-Guide/html/) by Machtelt Garrels is a bash scripting book/tutorial with exercises.
 
 [Shell Scripting Tutorial](https://www.shellscript.sh/index.html) for writing bash scripts.
 
-## Resources
 
-NOTE: [Exercises](/command_line_advanced_exercises.md) and [Exercise Solutions](/command_line_advance_exercises_with_answers.md) in this repository are written specifically for a linux system (like Quest) and to further practice material covered in Bash scripting workshop.
 
