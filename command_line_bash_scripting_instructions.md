@@ -64,7 +64,11 @@ Use the above example to show what to do when we are not able to name all the ar
 
 Follow 4.2.2. and 4.2.3. from Data Science at Command line. Show that scripts we made will not execute without bash preceding the command we made.
 
-Explain permissions and how to add them and what else to add to be able to execute a command. Mention adding to the path.
+Explain permissions and how to add them and what else to add to be able to execute a command. Explain also, when you type a command the shell looks up a list of directories, as specified by the PATH variable. The current directory is not in that list.
+
+The reason for not having the current directory on that list is security.
+
+Mention adding the script path to the path.
 
 
 
