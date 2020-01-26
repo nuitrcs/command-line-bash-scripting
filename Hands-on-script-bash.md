@@ -8,6 +8,15 @@
 - Learn to write and execute a simple script
 - Extend your script with multiple commands
 
+When we want to reuse commands, we can find older commands using the up/down  
+arrow keys or `history` command.
+
+When we need to accomplish many tasks and repeat them frequently, using  
+arrow keys or `history` will be inefficient. It is better to save your  
+commands to a file. Instead of executing the commands one by one on the  
+command line, we can execute the file. This file is called a shell script.
+If you shell is using Bash, then we can call this file a Bash script.
+
 Let's start with a simple command and reproduce its function the using a script.
 We will use some input files from "shell-novice-data" folder.
 
@@ -32,6 +41,7 @@ nano middle.sh
 This will open the interface of nano and let's you write to the file. Let's
 write the first `head` command in the file:
 
+> Code
 ```code
     head -n 12 octane.pdb
 ```
@@ -68,7 +78,7 @@ bash middle.sh
 Now we will see a single output that is a combination of both commands that
 is in "middle.sh" file.
 
-# 2- Variable arguments
+# 2- Variables and Arguments
 
 ### Questions
 - How do I use arbitrary inputs without changing the script every time?
@@ -77,6 +87,37 @@ is in "middle.sh" file.
 ### Objectives
 - Learn
 - Extend
+
+## Variables
+
+In programing, variables are information holders, or labels of information.
+You can access the same information through out your program by calling
+its label. You can also assign new information to the labels.
+
+Let's start editing our first bash script.
+
+```bash
+nano middle.sh
+```
+
+We will type the following code block in the script file to look at
+variable 'myfavnumber'.
+
+> Code
+```code
+    myinput='octane.pdb'
+    echo 'My input file is' $myinput
+
+    head -n 12 $myinput
+    head -n 12 $myinput | tail -n 10
+```
+
+`$` symbol tells the shell interpreter to treat *myinput* as
+a **variable** and look what is inside this label. So `$myinput`
+returns the value of the variable which becomes "octane.pdb". In some
+bash code, you may see `${myinput}` which is equivalent to `$myinput`
+
+## Arguments
 
 The input to our commands was file "octane.pdb" last time. It would be
 ineffective to change our script every time when we want to examine another
