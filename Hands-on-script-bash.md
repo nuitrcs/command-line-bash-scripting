@@ -247,7 +247,7 @@ nano sorted.sh
 
 > Code
 ```code
-wc -l "$1" "$2" "$3" | sort -n
+    wc -l "$1" "$2" "$3" | sort -n
 ```
 
 Let's execute the script but instead of listing all the files exclusively
@@ -268,7 +268,7 @@ nano sorted.sh
 
 > Code
 ```code
-wc -l "$@" | sort -n
+    wc -l "$@" | sort -n
 ```
 
 Let's execute the script
@@ -277,7 +277,7 @@ Let's execute the script
 bash sorted.sh *.pdb
 ```
 
-If you forget to provide input as show below, the script will start but
+If you forget to provide input as shown below, the script will start but
 not do anything. To exit from this state hit <kbd>CRTL</kbd>+<kbd>c</kbd>.
 
 ```bash
