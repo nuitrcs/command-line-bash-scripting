@@ -286,8 +286,9 @@ bash sorted.sh
 
 # 3- Loops
 
-Loop structures are common to all programing languages and they are used
-for coding repetitive tasks in an efficient manner.
+Loop structures are common to all programing languages. They are used
+for executing a block of code over and over again thus helping us to code
+repetitive tasks in an efficient manner.
 
 Let's move to "creatures" folder. We will work with the two files but let's
 first create backup copies.
@@ -305,9 +306,9 @@ nano list_creatures.sh
     done
 ```
 
-`$` symbol tells the shell interpreter to treat *filename* as a **variable** and
-`$filename` returns the value of the variable which becomes *basilisk.dat* and
-*unicorn.dat* within the loop.
+`$` symbol tells the shell interpreter to treat *filename* as a **variable**
+(which can also be called loop index). `$filename` returns the value of
+the variable which becomes *basilisk.dat* and *unicorn.dat* within the loop.
 
 We run the list-creatures.sh
 
@@ -315,8 +316,8 @@ We run the list-creatures.sh
 bash list_creatures.sh
 ```
 
-Instead writing all the file names as the argument of loop, we can use
-wildcards to simplify listing. Using wildcard notation and a loop, let's
+Instead writing all the file names as the argument of the loop, we can use
+wildcards to simplify the listing. Using wildcard notation and a loop, let's
 create back-up files for all creature files with our script:
 
 ```bash
@@ -331,3 +332,37 @@ nano copy_files.sh
         cp "$filename" original-"$filename"
     done
  ```
+
+```bash
+bash copy_files.sh
+```
+
+We can provide the values of the loop index from the command line as
+we discussed in Arguments section.
+
+First remove the back-up files:
+
+```bash
+rm original*
+```
+
+Then recreate the back-up files by providing the list of files from the
+command line:
+
+> Code
+```code
+    for filename in $@
+    do
+        echo $filename
+        cp "$filename" original-"$filename"
+    done
+ ```
+
+Run the script and check if the files are recreated:
+
+```bash
+bash copy_files.sh *.dat
+ls -al
+```
+
+
