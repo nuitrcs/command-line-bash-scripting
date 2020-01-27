@@ -40,8 +40,8 @@ create our first script.
 nano middle.sh
 ```
 
-This will open the interface of nano and let's you write to the file. Let's
-write the first `head` command in the file:
+This will open the interface of nano and let's you write to the file.
+Let's write the first `head` command in the file:
 
 > Code
 ```code
@@ -197,10 +197,11 @@ bash middle.sh octane.pdb 12 10
 ```
 The positional parameters `$1`, `$2` and `$3` receive their values in
 the same order as arguments given on the command line. Consequently the
-output remained the same.
+output of the script remained the same.
 
 In case the argument happens to contain any spaces, we surround both the
-argument and positional parameter with double-quotes. In general it does
+argument and positional parameter with double-quotes. If the argument
+name does not have spaces, double-quotes make no difference.
 
 ```bash
 nano middle.sh
@@ -213,8 +214,7 @@ nano middle.sh
 ```
 
 ```bash
-bash middle.sh octane.pdb
-bash middle.sh pentane.pdb
+bash middle.sh "high octane.pdb" 3 2
 ```
 
 It is a good coding practice to add comments in your script to explain
@@ -226,18 +226,17 @@ nano middle.sh
 
 > Code
 ```code
-#!/usr/bin/env bash
+    # Select n lines from the top of a file and print m of
+    # these lines from the bottom
+    # Usage: bash middle.sh filename top_n_lines bottom_m_lines
+    # head -n  octane.pdb | tail -m 5
 
-# Select lines from the middle of a file.
-# Usage: bash middle.sh filename end_line num_lines
-# head -n 15 octane.pdb | tail -n 5
-
-head -n "$2" "$1" | tail -n "$3"
+    head -n "$2" "$1" | tail -n "$3"
 ```
 
 Comments are invaluable for helping people (including your future self)
 understand and use scripts. However each time you modify the script, you
-should check that the comment is still accurate.
+should check if the comment is still accurate.
 
 
 
