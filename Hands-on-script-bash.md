@@ -231,12 +231,103 @@ nano middle.sh
     # Usage: bash middle.sh filename top_n_lines bottom_m_lines
     # head -n  octane.pdb | tail -m 5
 
-    head -n "$2" "$1" | tail -n "$3"
+    head -n "$2" "$1" | tail -m "$3"
 ```
 
 Comments are invaluable for helping people (including your future self)
 understand and use scripts. However each time you modify the script, you
 should check if the comment is still accurate.
 
+Let's write another script to find the number of lines for each "pdb" files
+and sort them according to these numbers.
 
+```bash
+nano sorted.sh
+```
 
+> Code
+```code
+wc -l "$1" "$2" "$3" | sort -n
+```
+
+Let's execute the script but instead of listing all the files exclusively
+as script arguments, we use a wildcard notation:
+
+```bash
+bash sorted.sh *.pdb
+```
+
+As you see we did not get all the files. Only three files reported because
+we entered three positional parameters in the script. If we want to enter
+any number of input arguments, instead of using `"$1"`, `"$2"` etc., we
+could use `"$@"`
+
+```bash
+nano sorted.sh
+```
+
+> Code
+```code
+wc -l "$@" | sort -n
+```
+
+Let's execute the script
+
+```bash
+bash sorted.sh *.pdb
+```
+
+If you forget to provide input as show below, the script will start but
+not do anything. To exit from this state hit <kbd>CRTL</kbd>+<kbd>c</kbd>.
+
+```bash
+bash sorted.sh
+```
+
+# 3- Loops
+
+Loop structures are common to all programing languages and they are used
+for coding repetitive tasks in an efficient manner.
+
+Let's move to "creatures" folder. We will work with the two files but let's
+first create backup copies.
+
+```bash
+cd ../creatures
+nano list_creatures.sh
+```
+
+> Code
+```code
+    for filename in basilisk.dat unicorn.dat
+    do
+        head -n 2 "$filename" | tail -n 1
+    done
+```
+
+`$` symbol tells the shell interpreter to treat *filename* as a **variable** and
+`$filename` returns the value of the variable which becomes *basilisk.dat* and
+*unicorn.dat* within the loop.
+
+We run the list-creatures.sh
+
+```bash
+bash list_creatures.sh
+```
+
+Instead writing all the file names as the argument of loop, we can use
+wildcards to simplify listing. Using wildcard notation and a loop, let's
+create back-up files for all creature files with our script:
+
+```bash
+nano copy_files.sh
+```
+
+> Code
+```code
+    for filename in *.dat
+    do
+        echo $filename
+        cp "$filename" original-"$filename"
+    done
+ ```
