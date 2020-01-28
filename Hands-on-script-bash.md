@@ -3,7 +3,7 @@
 ### Questions
 - What is a Bash script? Why do I need it?
 - How do I write a Bash script?
-= How can I save and re-use commands?
+- How can I save and re-use commands?
 
 ### Objectives
 - Write a simple script that runs a command or series of commands for a
@@ -92,6 +92,8 @@ that is in "middle.sh" file.
 - Make your bash script more flexible with arguments and variables.
 - Write a shell script that operates on a set of files defined by the
 user on the command line.
+- Explain why spaces and some punctuation characters should not be used in
+file names.
 - Demonstrate how to see what commands have recently been executed.
 - Re-run recently executed commands without retyping them.
 
@@ -207,7 +209,9 @@ output of the script remained the same.
 
 In case the argument happens to contain any spaces, we surround both the
 argument and positional parameter with double-quotes. If the argument
-name does not have spaces, double-quotes make no difference.
+name does not have spaces, double-quotes make no difference. Coding is
+simpler and straightforward if avoid using spaces (or other special
+characters) in file names.
 
 ```bash
 nano middle.sh
@@ -305,7 +309,7 @@ on the command line where <number> is the assigned number for that command.
 
 We can also remove the serial numbers from the file using a text editor
 and use the file as a bash script that includes a accurate record of our
-recent commands. 
+recent commands.
 
 # 3- Loops
 
@@ -317,8 +321,6 @@ recent commands.
 in a set of files.
 - Trace the values taken on by a loop variable during execution of the loop.
 - Explain the difference between a variable’s name and its value.
-- Explain why spaces and some punctuation characters should not be used in
-file names.
 
 Loop structures are common to all programing languages. They are used
 for executing a block of code over and over again thus helping us to code
@@ -399,7 +401,44 @@ bash copy_files.sh *.dat
 ls -al
 ```
 
+As before, we can delete the back-up files if we don't need them:
 
+```bash
+rm original*
+```
+
+Now let's explore how we can combine a set of files selected via certain
+criterion. For this we will go back to "molecules" folder.  Assume we
+want to append all the molecules containing letter "c" in their name:
+
+```bash
+nano append-files.sh
+```
+
+> Code
+```code
+    for molecule in *c*
+    do
+        echo "$molecule"
+        cat "$molecule" >> c_molecules.dat
+    done
+```
+
+Print the contents of "c_molecules.dat" file on the screen and then delete
+the file
+
+```bash
+cat c_molecules.dat
+rm c_molecules.dat
+```
+
+Notice that we used `>>` in redirection to append files instead of `>`.
+If we use the latter, you will only see the contents of the last file since
+every iteration of the loop "c_molecules.dat" file is overwritten with new
+content.
+
+We also used double-quotes around the value `$molecule` to capture files
+with spaces in their names.
 
 # Shebang
 
@@ -424,20 +463,21 @@ interpreter that it needs to use to run the script. In our case, the
 interpreter is bash. When shebang is included in your script, you can
 run the script without prefixing with the interpreter on the command line.
 
-Let's add the shebang to our "list_creatures.sh" script
+Let's add the shebang to our "append-files.sh" script in "molecules"
+folder.
 
 ```bash
-cd ../creatures
-nano list_creatures.sh
+nano append-files.sh
 ```
 
 > Code
 ```code
     #!/usr/bin/env bash
 
-    for filename in basilisk.dat unicorn.dat
+    for molecule in *c*
     do
-        head -n 2 "$filename" | tail -n 1
+        echo "$molecule"
+        cat "$molecule" >> c_molecules.dat
     done
 ```
 
@@ -446,8 +486,8 @@ executable by giving execute permission to the user. Then we can run the
 script without using `bash` prefix.
 
 ```bash
-chmod u+x list_creatures.sh
-./list_creatures.sh
+chmod u+x append-files.sh
+./append-files.sh
 ```
 
 # Acknowledgement
