@@ -172,7 +172,6 @@ with `$1` which takes the value of our first script argument on the
 command line.
 
 Let's run our script to see if there is any change in the output:
-
 ```bash
 bash middle.sh octane.pdb
 bash middle.sh pentane.pdb
@@ -195,6 +194,7 @@ After changing our code as above, we run it:
 ```bash
 bash middle.sh octane.pdb 12 10
 ```
+
 The positional parameters `$1`, `$2` and `$3` receive their values in
 the same order as arguments given on the command line. Consequently the
 output of the script remained the same.
@@ -365,4 +365,51 @@ bash copy_files.sh *.dat
 ls -al
 ```
 
+# Shebang
 
+When you read Bash scripts you will see the first line of the script
+starts with `#!` characters and the path to the Bash interpreter. This line
+is called the shebang or hashbang.
+
+You may see different ways that shebang can be written:
+
+> Code
+```code
+    #!/bin/bash
+```
+
+> Code
+```code
+    #!/usr/bin/env bash
+```
+
+When your script starts with a shebang, the system will know what
+interpreter that it needs to use to run the script. In our case, the
+interpreter is bash. When shebang is included in your script, you can
+run the script without prefixing with the interpreter on the command line.
+
+Let's add the shebang to our "list_creatures.sh" script
+
+```bash
+cd ../creatures
+nano list_creatures.sh
+```
+
+> Code
+```code
+    #!/usr/bin/env bash
+
+    for filename in basilisk.dat unicorn.dat
+    do
+        head -n 2 "$filename" | tail -n 1
+    done
+```
+
+Now the shebang is added to the script, we will make our script an
+executable by giving execute permission to the user. Then we can run the
+script without using `bash` prefix.
+
+```bash
+chmod u+x list_creatures.sh
+./list_creatures.sh
+```
