@@ -3,10 +3,12 @@
 ### Questions
 - What is a Bash script? Why do I need it?
 - How do I write a Bash script?
+= How can I save and re-use commands?
 
 ### Objectives
-- Learn to write and execute a simple script
-- Extend your script with multiple commands
+- Write a simple script that runs a command or series of commands for a
+fixed set of files.
+- Run a shell script from the command line.
 
 When we want to reuse commands, we can find older commands using the
 up/down arrow keys or `history` command.
@@ -83,12 +85,16 @@ that is in "middle.sh" file.
 # 2- Variables and Arguments
 
 ### Questions
+- How do I introduce and manipulate variables in a bash script?
 - How do I use arbitrary inputs without changing the script every time?
-- How do I ?
 
 ### Objectives
-- Learn
-- Extend
+- Make your bash script more flexible with arguments and variables.
+- Write a shell script that operates on a set of files defined by the
+user on the command line.
+- Demonstrate how to see what commands have recently been executed.
+- Re-run recently executed commands without retyping them.
+
 
 ## Variables
 
@@ -284,7 +290,35 @@ not do anything. To exit from this state hit <kbd>CRTL</kbd>+<kbd>c</kbd>.
 bash sorted.sh
 ```
 
+A shortcut to save some useful commands is to redirect the current
+history to a file. Let's record the last five commands that have been
+issued.
+
+```bash
+history | tail -n 5 > recent-commands.sh
+cat recent-commands.sh
+```
+
+As you see each command is assigned a number in the first column. Using
+that number you can easily reissue any command. We just type `!<number>`
+on the command line where <number> is the assigned number for that command.
+
+We can also remove the serial numbers from the file using a text editor
+and use the file as a bash script that includes a accurate record of our
+recent commands. 
+
 # 3- Loops
+
+### Questions
+- How can I perform the same actions on many different files?
+
+### Objectives
+- Write a loop that applies one or more commands separately to each file
+in a set of files.
+- Trace the values taken on by a loop variable during execution of the loop.
+- Explain the difference between a variable’s name and its value.
+- Explain why spaces and some punctuation characters should not be used in
+file names.
 
 Loop structures are common to all programing languages. They are used
 for executing a block of code over and over again thus helping us to code
@@ -365,6 +399,8 @@ bash copy_files.sh *.dat
 ls -al
 ```
 
+
+
 # Shebang
 
 When you read Bash scripts you will see the first line of the script
@@ -413,3 +449,8 @@ script without using `bash` prefix.
 chmod u+x list_creatures.sh
 ./list_creatures.sh
 ```
+
+# Acknowledgement
+
+The workshop is based on the course provided by Software Carpentry:
+[The Unix Shell](https://swcarpentry.github.io/shell-novice/)
