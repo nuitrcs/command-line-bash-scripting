@@ -633,7 +633,7 @@ nano count.sh
 ```
 
 Other common integer comparison commands
-```code
+```bash
     -eq   equal to
     -ne   not equal to
     -gt   greater than
