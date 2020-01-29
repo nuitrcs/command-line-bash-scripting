@@ -49,10 +49,7 @@ head -n 12 octane.pdb | tail -n 10
 ```
 
 If you get suspended, the system is waiting for further commands from you,
-you can just hit
-```
-Ctrl + c
-```
+you can just hit <kbd>CRTL</kbd>+<kbd>c</kbd>.
 
 Now, if we want to re-use these commands, a script is the best way to
 store them for future use. We will use a text editor called nano to
@@ -66,7 +63,7 @@ This will open the interface of nano and let's you write to the file.
 Let's write the first `head` command in the file:
 
 > Code
-```code
+```bash
     #!/bin/bash
     head -n 12 octane.pdb
 ```
@@ -117,6 +114,11 @@ chmod +x middle.sh
 ls -hl
 ```
 
+Then we can execute this script by
+```
+./middle.sh
+```
+
 We should see the same output as before. Let's continue to enter more
 commands in our script and run it.
 
@@ -125,7 +127,7 @@ nano middle.sh
 ```
 
 > Code
-```code
+```bash
     #!/bin/bash
 
     head -n 12 octane.pdb
@@ -197,7 +199,7 @@ We will type the following code block in the script file to look at
 variable 'myinput'.
 
 > Code
-```code
+```bash
     #!/bin/bash
     myinput="octane.pdb"
     echo "My input file is" $myinput
@@ -225,7 +227,7 @@ nano middle.sh
 ```
 
 > Code
-```code
+```bash
     #!/bin/bash
 
     myinput=$1
@@ -250,7 +252,7 @@ nano middle.sh
 ```
 
 > Code
-```code
+```bash
     #!/bin/bash
 
     # myinput=$1
@@ -273,7 +275,7 @@ bash middle.sh pentane.pdb
 ```
 
 Some more introduction to commenting. It is a good coding practice to add
-comments in your script to explainwhat is being done to another user of
+comments in your script to explain what is being done to another user of
 your script.
 
 ```bash
@@ -307,7 +309,7 @@ nano middle.sh
 ```
 
 > Code
-```code
+```bash
     #!/bin/bash
     # head -n 12 octane.pdb | tail -n 10
     head -n $2 $1 | tail -n $3
@@ -340,7 +342,7 @@ nano middle.sh
 ```
 
 > Code
-```code
+```bash
     #!/bin/bash
     # head -n 12 octane.pdb | tail -n 10
     head -n "$2" "$1" | tail -n "$3"
@@ -364,7 +366,7 @@ nano sorted.sh
 ```
 
 > Code
-```code
+```bash
     #!/bin/bash
     wc -l "$1" "$2" "$3" | sort -n
 ```
@@ -386,7 +388,7 @@ nano sorted.sh
 ```
 
 > Code
-```code
+```bash
     #!/bin/bash
     wc -l "$@" | sort -n
 ```
@@ -445,7 +447,7 @@ nano list_creatures.sh
 ```
 
 > Code
-```code
+```bash
     #!/bin/bash
     for filename in basilisk.dat unicorn.dat
     do
@@ -472,7 +474,7 @@ nano copy_files.sh
 ```
 
 > Code
-```code
+```bash
     #!/bin/bash
     for filename in *.dat
     do
@@ -498,7 +500,7 @@ Then recreate the back-up files by providing the list of files from the
 command line:
 
 > Code
-```code
+```bash
     #!/bin/bash
     for filename in "$@"
     do
@@ -529,7 +531,7 @@ nano append-files.sh
 ```
 
 > Code
-```code
+```bash
     #!/bin/bash
     for molecule in *c*
     do
@@ -553,7 +555,7 @@ content. We also used double-quotes around the value `$molecule` to capture file
 with spaces in their names.
 
 Another common usage of for loops is two run some commands for a number
-of times
+of times.
 
 ```bash
 cd ..
@@ -564,7 +566,7 @@ nano generate_files.sh
 ```
 
 >Code
-```code
+```bash
     #!/bin/bash
 
     # loop over 1-10
@@ -577,7 +579,7 @@ nano generate_files.sh
 
 Now we want to increment 2 each time
 >Code
-```code
+```bash
     #!/bin/bash
 
     # loop over 1, 3, 5, 7, 9
@@ -590,7 +592,7 @@ Now we want to increment 2 each time
 
 An equivalent method
 >Code
-```code
+```bash
     #!/bin/bash
 
     # loop over 0, 2, 4, 6
@@ -612,7 +614,7 @@ nano count.sh
 ```
 
 >Code
-```code
+```bash
     #!/bin/bash
 
     count=$1
@@ -647,7 +649,7 @@ nano check_file.sh
 ```
 
 >Code
-```code
+```bash
     #!/bin/bash
 
     for filename in $@
@@ -681,7 +683,7 @@ nano while_loop.sh
 ```
 
 >Code
-```code
+```bash
     #!/bin/bash
 
     cnt=0
