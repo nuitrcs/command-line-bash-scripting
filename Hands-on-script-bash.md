@@ -9,6 +9,16 @@
 - Write a simple script that runs a command or series of commands for a
 fixed set of files.
 - Run a shell script from the command line.
+- Use shebang and run the script without bash interpreter prefix
+
+A Unix shell interprets user commands, either directly entered from the command line,
+or read from a file called shell script. Shell scripts are directly interpreted
+by the operating system, no need to be compiled like C++.
+
+```bash
+cat /etc/shells
+history
+```
 
 When we want to reuse commands, we can find older commands using the
 up/down arrow keys or `history` command.
@@ -30,8 +40,18 @@ the file. Using these commands let's print out the contents of
 
 ```bash
 cd /absolute/path/to/shell-novice-data/bash-scripting/molecules
+pwd
+ls -hl
+alias ll='ls -hl'
+ll
 head -n 12 octane.pdb
 head -n 12 octane.pdb | tail -n 10
+```
+
+If you get suspended, the system is waiting for further commands from you,
+you can just hit
+```
+Ctrl + c
 ```
 
 Now, if we want to re-use these commands, a script is the best way to
@@ -47,6 +67,7 @@ Let's write the first `head` command in the file:
 
 > Code
 ```code
+    #!/bin/bash
     head -n 12 octane.pdb
 ```
 
@@ -60,6 +81,42 @@ Now we can run our first script with `bash` as the interpreter.
 bash middle.sh
 ```
 
+When you read Bash scripts you will see the first line of the script
+starts with `#!` characters and the path to the Bash interpreter. This line
+is called the shebang or hashbang.
+
+```
+which bash
+ls -hl /bin
+```
+
+You may see different ways that shebang can be written:
+
+> Code
+```code
+    #!/bin/bash
+```
+
+> Code
+```code
+    #!/usr/bin/env bash
+```
+
+When your script starts with a shebang, the system will know what
+interpreter that it needs to use to run the script. In our case, the
+interpreter is bash. When shebang is included in your script, you can
+run the script without prefixing with the interpreter on the command line.
+
+When shebang is added to the script, we can make our script an
+executable by giving execute permission to the user. Then we can run the
+script without using `bash` prefix.
+
+```bash
+ls -hl
+chmod +x middle.sh
+ls -hl
+```
+
 We should see the same output as before. Let's continue to enter more
 commands in our script and run it.
 
@@ -69,11 +126,14 @@ nano middle.sh
 
 > Code
 ```code
+    #!/bin/bash
+
     head -n 12 octane.pdb
+    echo ""
     head -n 12 octane.pdb | tail -n 10
 ```
 
-Now running this script again:
+Running this script again:
 
 ```bash
 bash middle.sh
@@ -105,7 +165,29 @@ information. You can access the same information through out your
 program by calling its label. You can also assign new information to the
 labels. Using variables make your code more flexible.
 
-Let's start editing our first Bash script.
+Variables can be defined by the system, which are called environmental
+variables:
+
+```
+echo $PWD
+echo $HOME
+env
+```
+
+Users can also define their own variables:
+```
+myName=Raymond
+echo $myName
+```
+
+`$` symbol tells the shell interpreter to treat *myName* as a
+**variable** and look what is inside this label. So `$myName` returns
+the value of the variable which becomes "Raymond". In some bash code,
+you may see `${myName}` which is equivalent to `$myName`
+
+Variable names are case-sensitive and cannot start with a number.
+
+Let's edit our first Bash script "middle.sh".
 
 ```bash
 nano middle.sh
@@ -116,17 +198,18 @@ variable 'myinput'.
 
 > Code
 ```code
-    myinput='octane.pdb'
-    echo 'My input file is' $myinput
+    #!/bin/bash
+    myinput="octane.pdb"
+    echo "My input file is" $myinput
 
     head -n 12 $myinput
     head -n 12 $myinput | tail -n 10
 ```
 
-`$` symbol tells the shell interpreter to treat *myinput* as a
-**variable** and look what is inside this label. So `$myinput` returns
-the value of the variable which becomes "octane.pdb". In some bash code,
-you may see `${myinput}` which is equivalent to `$myinput`
+Running the script again:
+```bash
+bash middle.sh
+```
 
 ## Arguments
 
@@ -143,6 +226,8 @@ nano middle.sh
 
 > Code
 ```code
+    #!/bin/bash
+
     myinput=$1
     echo 'My input file is' $myinput
 
@@ -166,6 +251,8 @@ nano middle.sh
 
 > Code
 ```code
+    #!/bin/bash
+
     # myinput=$1
     echo 'My input file is' $1
 
@@ -185,6 +272,33 @@ bash middle.sh octane.pdb
 bash middle.sh pentane.pdb
 ```
 
+Some more introduction to commenting. It is a good coding practice to add
+comments in your script to explainwhat is being done to another user of
+your script.
+
+```bash
+nano tmp.sh
+```
+
+> Code
+```bash
+    #!/bin/bash
+    # This is a comment, the line above is a shebang
+    ## This is also a comment
+    echo "Hello" # A comment can also come after a command
+    # some other commands...
+```
+
+```bash
+bash tmp.sh
+```
+
+We will only see the `echo` command output Hello.
+
+Comments are invaluable for helping people (including your future self)
+understand and use scripts. However each time you modify the script, you
+should check if the comment is still accurate.
+
 Now we will simplify our script and add more positional parameters so
 that we can use more arguments with our script.
 
@@ -194,9 +308,17 @@ nano middle.sh
 
 > Code
 ```code
+    #!/bin/bash
     # head -n 12 octane.pdb | tail -n 10
     head -n $2 $1 | tail -n $3
+    # take a look at the argument variables
+    echo ""
+    echo "\$0 is" $0
+    echo "\$1 is" $1
+    echo "\$2 is" $2
+    echo "\$3 is" $3
 ```
+
 After changing our code as above, we run it:
 
 ```bash
@@ -219,34 +341,20 @@ nano middle.sh
 
 > Code
 ```code
+    #!/bin/bash
     # head -n 12 octane.pdb | tail -n 10
     head -n "$2" "$1" | tail -n "$3"
+    # take a look at the argument variables
+    echo ""
+    echo "\$0 is" "$0"
+    echo "\$1 is" "$1"
+    echo "\$2 is" "$2"
+    echo "\$3 is" "$3"
 ```
 
 ```bash
 bash middle.sh "high octane.pdb" 3 2
 ```
-
-It is a good coding practice to add comments in your script to explain
-what is being done to another user of your script.
-
-```bash
-nano middle.sh
-```
-
-> Code
-```code
-    # Select n lines from the top of a file and print m of
-    # these lines from the bottom
-    # Usage: bash middle.sh filename top_n_lines bottom_m_lines
-    # head -n  octane.pdb | tail -m 5
-
-    head -n "$2" "$1" | tail -m "$3"
-```
-
-Comments are invaluable for helping people (including your future self)
-understand and use scripts. However each time you modify the script, you
-should check if the comment is still accurate.
 
 Let's write another script to find the number of lines for each "pdb" files
 and sort them according to these numbers.
@@ -257,6 +365,7 @@ nano sorted.sh
 
 > Code
 ```code
+    #!/bin/bash
     wc -l "$1" "$2" "$3" | sort -n
 ```
 
@@ -278,6 +387,7 @@ nano sorted.sh
 
 > Code
 ```code
+    #!/bin/bash
     wc -l "$@" | sort -n
 ```
 
@@ -336,6 +446,7 @@ nano list_creatures.sh
 
 > Code
 ```code
+    #!/bin/bash
     for filename in basilisk.dat unicorn.dat
     do
         head -n 2 "$filename" | tail -n 1
@@ -362,6 +473,7 @@ nano copy_files.sh
 
 > Code
 ```code
+    #!/bin/bash
     for filename in *.dat
     do
         echo $filename
@@ -387,9 +499,10 @@ command line:
 
 > Code
 ```code
-    for filename in $@
+    #!/bin/bash
+    for filename in "$@"
     do
-        echo $filename
+        echo "$filename"
         cp "$filename" original-"$filename"
     done
  ```
@@ -417,6 +530,7 @@ nano append-files.sh
 
 > Code
 ```code
+    #!/bin/bash
     for molecule in *c*
     do
         echo "$molecule"
@@ -435,60 +549,156 @@ rm c_molecules.dat
 Notice that we used `>>` in redirection to append files instead of `>`.
 If we use the latter, you will only see the contents of the last file since
 every iteration of the loop "c_molecules.dat" file is overwritten with new
-content.
-
-We also used double-quotes around the value `$molecule` to capture files
+content. We also used double-quotes around the value `$molecule` to capture files
 with spaces in their names.
 
-# Shebang
-
-When you read Bash scripts you will see the first line of the script
-starts with `#!` characters and the path to the Bash interpreter. This line
-is called the shebang or hashbang.
-
-You may see different ways that shebang can be written:
-
-> Code
-```code
-    #!/bin/bash
-```
-
-> Code
-```code
-    #!/usr/bin/env bash
-```
-
-When your script starts with a shebang, the system will know what
-interpreter that it needs to use to run the script. In our case, the
-interpreter is bash. When shebang is included in your script, you can
-run the script without prefixing with the interpreter on the command line.
-
-Let's add the shebang to our "append-files.sh" script in "molecules"
-folder.
+Another common usage of for loops is two run some commands for a number
+of times
 
 ```bash
-nano append-files.sh
+cd ..
+pwd
+mkdir make_files
+cd make_files
+nano generate_files.sh
 ```
 
-> Code
+>Code
 ```code
-    #!/usr/bin/env bash
+    #!/bin/bash
 
-    for molecule in *c*
+    # loop over 1-10
+    for i in {1..10}
     do
-        echo "$molecule"
-        cat "$molecule" >> c_molecules.dat
+        touch file-$i.dat
+        echo $i > file-$i.dat
     done
 ```
 
-Now the shebang is added to the script, we will make our script an
-executable by giving execute permission to the user. Then we can run the
-script without using `bash` prefix.
+Now we want to increment 2 each time
+>Code
+```code
+    #!/bin/bash
+
+    # loop over 1, 3, 5, 7, 9
+    for i in {1..10..2} #{START..END..INCREMENT}
+    do
+        touch file-$i.dat
+        echo $i > file-$i.dat
+    done
+```
+
+An equivalent method
+>Code
+```code
+    #!/bin/bash
+
+    # loop over 0, 2, 4, 6
+    for ((j=0; j<7; j=$((j+2))))
+    do
+        echo $j > file-$j.dat
+    done
+```
+
+# 4- Conditionals
+
+Here we introduce some basic conditionals for Bash scripting, where the system
+performs different operations at different conditions.
 
 ```bash
-chmod u+x append-files.sh
-./append-files.sh
+cd ..
+pwd
+nano count.sh
 ```
+
+>Code
+```code
+    #!/bin/bash
+
+    count=$1
+    if [ $count -eq 0 ]
+    then
+        echo $count "is equal to 0"
+    elif [ $count -lt 0 ]
+    then
+        echo $count "is less than 0"
+    elif [ $count -gt 1 ] && [ $count -lt 3 ] # && for logical AND, || for logical OR
+    then
+        echo $count "is between 1 and 3"
+    else
+        echo $count "is beyond our scope"
+    fi
+```
+
+Other common integer comparison commands
+```code
+    -eq   equal to
+    -ne   not equal to
+    -gt   greater than
+    -ge   greater than or equal to
+    -lt   less than
+    -le   less than or equal to
+```
+
+Check whether a file a directory exists
+
+```bash
+nano check_file.sh
+```
+
+>Code
+```code
+    #!/bin/bash
+
+    for filename in $@
+    do
+        # check whether the file is there
+        if [ -e $filename ]
+        then
+            echo $filename "exists"
+        else
+            echo $filename "does not exist"
+            continue # use break to break out of the while loop
+        fi
+
+        # check whether it is a file ro directory
+        if [ -f $filename ]
+        then
+            echo $filename "is a file"
+        elif [ -d $filename ]
+        then
+            echo $filename "is a directory"
+        else
+            echo $filename "type unknown"
+        fi
+        echo ""
+    done
+```
+
+Conditionals in while loops
+```bash
+nano while_loop.sh
+```
+
+>Code
+```code
+    #!/bin/bash
+
+    cnt=0
+    while [ $cnt -lt 10 ]
+    do
+        cnt=$(( cnt+1 ))
+        if [ $cnt -eq 5 ]
+        then
+            continue # use break to break out of the while loop
+        fi
+        echo $cnt
+    done
+```
+
+If we still have some time left, let's take a look at some practical cases where bash scripts
+are used to setup system environments for software installation.
+
 
 # Acknowledgement
 
