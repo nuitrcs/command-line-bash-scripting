@@ -18,6 +18,7 @@ by the operating system, no need to be compiled like C++.
 ```bash
 cat /etc/shells
 history
+clear
 ```
 
 When we want to reuse commands, we can find older commands using the
@@ -30,7 +31,7 @@ command line, we can execute the file. This file is called a shell
 script. If you shell is using Bash, then we can call this file a Bash
 script.
 
-Let's start with a simple command and reproduce its function the using a
+Let's start with a simple command and reproduce its function using a
 script. We will use some input files from "shell-novice-data" folder.
 
 Remember `head` command prints out a number of lines from the top of the
@@ -85,18 +86,6 @@ is called the shebang or hashbang.
 ```
 which bash
 ls -hl /bin
-```
-
-You may see different ways that shebang can be written:
-
-> Code
-```code
-    #!/bin/bash
-```
-
-> Code
-```code
-    #!/usr/bin/env bash
 ```
 
 When your script starts with a shebang, the system will know what
@@ -406,23 +395,6 @@ not do anything. To exit from this state hit <kbd>CRTL</kbd>+<kbd>c</kbd>.
 bash sorted.sh
 ```
 
-A shortcut to save some useful commands is to redirect the current
-history to a file. Let's record the last five commands that have been
-issued.
-
-```bash
-history | tail -n 5 > recent-commands.sh
-cat recent-commands.sh
-```
-
-As you see each command is assigned a number in the first column. Using
-that number you can easily reissue any command. We just type `!<number>`
-on the command line where <number> is the assigned number for that command.
-
-We can also remove the serial numbers from the file using a text editor
-and use the file as a bash script that includes a accurate record of our
-recent commands.
-
 # 3- Loops
 
 ### Questions
@@ -513,7 +485,7 @@ Run the script and check if the files are recreated:
 
 ```bash
 bash copy_files.sh *.dat
-ls -al
+ls -hl
 ```
 
 As before, we can delete the back-up files if we don't need them:
@@ -521,38 +493,6 @@ As before, we can delete the back-up files if we don't need them:
 ```bash
 rm original*
 ```
-
-Now let's explore how we can combine a set of files selected via certain
-criterion. For this we will go back to "molecules" folder.  Assume we
-want to append all the molecules containing letter "c" in their name:
-
-```bash
-nano append-files.sh
-```
-
-> Code
-```bash
-    #!/bin/bash
-    for molecule in *c*
-    do
-        echo "$molecule"
-        cat "$molecule" >> c_molecules.dat
-    done
-```
-
-Print the contents of "c_molecules.dat" file on the screen and then delete
-the file
-
-```bash
-cat c_molecules.dat
-rm c_molecules.dat
-```
-
-Notice that we used `>>` in redirection to append files instead of `>`.
-If we use the latter, you will only see the contents of the last file since
-every iteration of the loop "c_molecules.dat" file is overwritten with new
-content. We also used double-quotes around the value `$molecule` to capture files
-with spaces in their names.
 
 Another common usage of for loops is two run some commands for a number
 of times.
@@ -587,18 +527,6 @@ Now we want to increment 2 each time
     do
         touch file-$i.dat
         echo $i > file-$i.dat
-    done
-```
-
-An equivalent method
->Code
-```bash
-    #!/bin/bash
-
-    # loop over 0, 2, 4, 6
-    for ((j=0; j<7; j=$((j+2))))
-    do
-        echo $j > file-$j.dat
     done
 ```
 
@@ -663,7 +591,7 @@ nano check_file.sh
             continue # use break to break out of the while loop
         fi
 
-        # check whether it is a file ro directory
+        # check whether it is a file or directory
         if [ -f $filename ]
         then
             echo $filename "is a file"
@@ -674,27 +602,6 @@ nano check_file.sh
             echo $filename "type unknown"
         fi
         echo ""
-    done
-```
-
-Conditionals in while loops
-```bash
-nano while_loop.sh
-```
-
->Code
-```bash
-    #!/bin/bash
-
-    cnt=0
-    while [ $cnt -lt 10 ]
-    do
-        cnt=$(( cnt+1 ))
-        if [ $cnt -eq 5 ]
-        then
-            continue # use break to break out of the while loop
-        fi
-        echo $cnt
     done
 ```
 
