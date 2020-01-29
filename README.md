@@ -15,11 +15,11 @@ On Mac OSX, which is based on a Unix environment, you can use the built in termi
 
 Windows, which is not Unix based, does not come with a bash shell.  Please [install GitBash](https://workshops.rcs.northwestern.edu/install/bash/).
 
-## Handouts
+[//]: # ## Handouts
 
-[vi Cheatsheet](https://github.com/nuitrcs/bash_hpc_workshops/blob/master/vibasics.pdf?raw=True)
+[//]: # [vi Cheatsheet](https://github.com/nuitrcs/bash_hpc_workshops/blob/master/vibasics.pdf?raw=True)
 
-[Code Script](https://github.com/nuitrcs/command-line-bash-scripting/blob/master/CommandLineScriptsHandout.pdf)
+[//]: # [Code Script](https://github.com/nuitrcs/command-line-bash-scripting/blob/master/CommandLineScriptsHandout.pdf)
 
 
 ## Resources
